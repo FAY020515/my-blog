@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的第一篇博客：开始学习编程 - 我的博客</title>
+    <style>
+        /* ========== 基础样式重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== CSS变量 ========== */
+        :root {
+            --primary-color: #2d3436;
+            --accent-color: #6c5ce7;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ========== 导航栏 ========== */
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========== 主内容区 ========== */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* ========== 文章头部 ========== */
+        .article-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .article-header h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        /* ========== 文章内容 ========== */
+        .article-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--shadow);
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .article-content h2 {
+            font-size: 28px;
+            margin: 40px 0 20px;
+            color: var(--accent-color);
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            margin: 30px 0 15px;
+            color: var(--text-color);
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 30px 0;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ========== 返回按钮 ========== */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        /* ========== 页脚 ========== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .article-header h1 {
+                font-size: 26px;
+            }
+
+            .article-content {
+                padding: 30px 20px;
+                font-size: 16px;
+            }
+
+            .article-content h2 {
+                font-size: 22px;
+            }
+        }
+
+        /* ========== 明暗模式切换按钮 ========== */
+        .mode-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #eee;
+            background: var(--card-bg);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .mode-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="index.html" class="logo">我的博客</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="index.html">文章</a></li>
+            <li><a href="guestbook.html">留言板</a></li>
+            <li><a href="about.html">关于</a></li>
+        </ul>
+
+        <!-- 明暗模式切换按钮 -->
+        <button class="mode-toggle-btn" onclick="toggleMode()" title="切换明暗模式">🌙</button>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 文章头部信息 -->
+        <header class="article-header">
+            <span class="article-tag">学习笔记</span>
+            <h1>我的第一篇博客：开始学习编程</h1>
+            <div class="article-meta">2024年1月15日 · 阅读时间 3分钟</div>
+        </header>
+
+        <!-- 文章内容 -->
+        <article class="article-content">
+            <p>今天是我开始学习编程的第一天。虽然之前对代码一窍不通，但我相信只要坚持学习，一定能够掌握这项技能。</p>
+
+            <h2>为什么要学习编程？</h2>
+            <p>在这个数字化时代，编程已经成为一项重要的技能。无论是想要转行进入科技行业，还是想要提升自己的工作效率，学习编程都能带来许多好处：</p>
+            <ul>
+                <li><strong>提升逻辑思维</strong> - 编程训练你像计算机一样思考问题</li>
+                <li><strong>创造能力</strong> - 你可以用代码创造出有用的工具和网站</li>
+                <li><strong>职业发展</strong> - 编程技能在就业市场上非常受欢迎</li>
+                <li><strong>解决问题</strong> - 学会用技术手段解决生活中的问题</li>
+            </ul>
+
+            <h2>我的学习计划</h2>
+            <p>为了系统地学习编程，我制定了以下学习计划：</p>
+
+            <h3>第一阶段：基础入门（1-2个月）</h3>
+            <ol>
+                <li>学习HTML，了解网页的基本结构</li>
+                <li>学习CSS，学会美化网页</li>
+                <li>学习JavaScript基础，让网页动起来</li>
+            </ol>
+
+            <h3>第二阶段：项目实践（2-3个月）</h3>
+            <ol>
+                <li>完成个人博客网站</li>
+                <li>制作一个待办事项工具</li>
+                <li>开发一个简单的天气查询应用</li>
+            </ol>
+
+            <h2>今日学习心得</h2>
+            <blockquote>
+                "千里之行，始于足下。" 虽然编程看起来很难，但只要每天进步一点点，终有一天会达到目标。
+            </blockquote>
+            <p>今天主要了解了编程的基本概念和前端开发的三大核心技术：HTML、CSS和JavaScript。明天开始正式学习HTML的基础知识。</p>
+
+            <a href="index.html" class="back-link">← 返回首页</a>
+        </article>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2024 我的博客 · 用心记录每一天的学习</p>
+    </footer>
+
+    <!-- 引入主题切换脚本 -->
+    <script src="theme.js"></script>
+</body>
+</html>

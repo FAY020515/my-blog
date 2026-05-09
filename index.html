@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客 - 学习记录</title>
+    <style>
+        /* ========== 基础样式重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== CSS变量 - 统一管理颜色 ========== */
+        :root {
+            --primary-color: #2d3436;      /* 主色调：深灰 */
+            --accent-color: #6c5ce7;       /* 强调色：紫色 */
+            --bg-color: #fafafa;           /* 背景色：浅灰 */
+            --card-bg: #ffffff;            /* 卡片背景：白色 */
+            --text-color: #2d3436;         /* 文字颜色 */
+            --text-light: #636e72;         /* 浅色文字 */
+            --border-radius: 12px;         /* 圆角大小 */
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);  /* 阴影效果 */
+        }
+
+        /* ========== 整体页面样式 ========== */
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ========== 导航栏样式 ========== */
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========== 主内容区域 ========== */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* ========== 头部介绍区 ========== */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== 搜索和筛选区域 ========== */
+        .search-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 18px 14px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text-color);
+            background: var(--bg-color);
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-light);
+        }
+
+        /* 标签筛选按钮 */
+        .tag-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-filter-btn {
+            padding: 8px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tag-filter-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .tag-filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+
+        /* 文章数量统计 */
+        .article-count-bar {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .article-count-bar span {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 18px;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* ========== 文章网格布局 ========== */
+        .articles {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* ========== 文章卡片 - 垂直布局 ========== */
+        .article-card {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            overflow: hidden;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        /* ========== 封面图片 ========== */
+        .article-cover {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        /* ========== 卡片内容区 ========== */
+        .article-card-content {
+            padding: 20px 25px 25px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+
+        .article-card h2 {
+            font-size: 18px;
+            margin: 0 0 8px;
+            color: var(--text-color);
+        }
+
+        .article-card h2 a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        .article-card h2 a:hover {
+            color: var(--accent-color);
+        }
+
+        .article-excerpt {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            flex: 1;
+            margin: 0;
+        }
+
+        .article-card .article-meta {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 15px;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover {
+            transform: translateX(5px);
+        }
+
+        /* ========== 页脚样式 ========== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        /* ========== 动画效果 ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+        .article-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* ========== 响应式设计 - 手机适配 ========== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .articles {
+                grid-template-columns: 1fr;
+            }
+
+            /* 颜色选择器 - 手机端缩小 */
+            .theme-picker {
+                gap: 6px;
+            }
+            .theme-btn {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        /* ========== 颜色选择器样式 ========== */
+        .theme-picker {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .theme-picker-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-right: 4px;
+        }
+
+        .theme-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            outline: none;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* 当前选中的颜色按钮 - 显示白色边框 */
+        .theme-btn.active {
+            border-color: var(--text-color);
+            transform: scale(1.15);
+        }
+
+        /* 各颜色按钮的背景色 */
+        .theme-btn[data-theme="purple"] { background: #6c5ce7; }
+        .theme-btn[data-theme="blue"]   { background: #0984e3; }
+        .theme-btn[data-theme="green"]  { background: #00b894; }
+        .theme-btn[data-theme="orange"] { background: #e17055; }
+        .theme-btn[data-theme="pink"]   { background: #e84393; }
+        .theme-btn[data-theme="dark"]   { background: #2d3436; }
+
+        /* ========== 明暗模式切换按钮 ========== */
+        .mode-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 600px) {
+            .mode-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== 导航栏 ========== -->
+    <nav>
+        <a href="index.html" class="logo">我的博客</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="index.html">文章</a></li>
+            <li><a href="guestbook.html">留言板</a></li>
+            <li><a href="about.html">关于</a></li>
+        </ul>
+
+        <!-- 颜色选择器：点击圆点切换主题色 -->
+        <div class="theme-picker">
+            <span class="theme-picker-label">主题</span>
+            <button class="theme-btn" data-theme="purple" title="优雅紫" onclick="switchTheme('purple')"></button>
+            <button class="theme-btn" data-theme="blue" title="天空蓝" onclick="switchTheme('blue')"></button>
+            <button class="theme-btn" data-theme="green" title="森林绿" onclick="switchTheme('green')"></button>
+            <button class="theme-btn" data-theme="orange" title="活力橙" onclick="switchTheme('orange')"></button>
+            <button class="theme-btn" data-theme="pink" title="少女粉" onclick="switchTheme('pink')"></button>
+            <button class="theme-btn" data-theme="dark" title="暗夜黑" onclick="switchTheme('dark')"></button>
+        </div>
+
+        <!-- 明暗模式切换按钮 -->
+        <button class="mode-toggle-btn" onclick="toggleMode()" title="切换明暗模式">🌙</button>
+    </nav>
+
+    <!-- ========== 主内容区 ========== -->
+    <main>
+        <!-- 头部介绍 -->
+        <section class="hero">
+            <h1>欢迎来到我的博客</h1>
+            <p>这里记录我的学习历程、思考感悟和技术探索。希望这些内容对你也有所帮助。</p>
+        </section>
+
+        <!-- 搜索和筛选区域 -->
+        <section class="search-section">
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="搜索文章标题或内容..." oninput="handleSearchInput(this.value)">
+            </div>
+            <!-- 标签筛选 -->
+            <div class="tag-filters" id="tag-filters">
+                <!-- 由 JavaScript 动态生成 -->
+            </div>
+        </section>
+
+        <!-- 文章数量统计 -->
+        <div class="article-count-bar">
+            <span id="article-count">2</span> 篇文章
+        </div>
+
+        <!-- 文章网格列表（由 JavaScript 动态渲染） -->
+        <section class="articles" id="article-list">
+            <!-- 文章卡片将由 JavaScript 动态生成 -->
+        </section>
+    </main>
+
+    <!-- ========== 页脚 ========== -->
+    <footer>
+        <p>© 2024 我的博客 · 用心记录每一天的学习</p>
+    </footer>
+
+    <!-- 引入脚本 -->
+    <script src="theme.js"></script>
+    <script src="articles.js"></script>
+    <script>
+        // 初始化首页
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTagFilters();  // 渲染标签筛选按钮
+            renderArticleList(articles);  // 渲染文章列表
+        });
+    </script>
+</body>
+</html>

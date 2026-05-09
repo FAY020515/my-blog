@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 - 我的博客</title>
+    <style>
+        /* ========== 基础样式重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== CSS变量 ========== */
+        :root {
+            --primary-color: #2d3436;
+            --accent-color: #6c5ce7;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ========== 导航栏 ========== */
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========== 主内容区 ========== */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* ========== 页面标题 ========== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        /* ========== 个人信息卡片 ========== */
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 头像占位 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .profile-card h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        .profile-card .bio {
+            font-size: 17px;
+            color: var(--text-color);
+            line-height: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== 信息区块 ========== */
+        .info-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px 50px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        /* 技能标签 */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .skill-tag.learning {
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            color: white;
+            border: none;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-color), #e0e0e0);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .timeline-item .time {
+            font-size: 13px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item .event {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        /* 联系方式 */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: var(--bg-color);
+            border-radius: var(--border-radius);
+            transition: transform 0.2s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .contact-item .label {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .contact-item .value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* ========== 返回首页按钮 ========== */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        /* ========== 页脚 ========== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        /* ========== 入场动画 ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .info-section:nth-child(1) { animation: fadeInUp 0.6s 0.1s ease forwards; opacity: 0; }
+        .info-section:nth-child(2) { animation: fadeInUp 0.6s 0.2s ease forwards; opacity: 0; }
+        .info-section:nth-child(3) { animation: fadeInUp 0.6s 0.3s ease forwards; opacity: 0; }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .profile-card {
+                padding: 30px 20px;
+            }
+
+            .info-section {
+                padding: 30px 20px;
+            }
+
+            .skill-tags {
+                gap: 8px;
+            }
+
+            .skill-tag {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+        }
+
+        /* ========== 明暗模式切换按钮 ========== */
+        .mode-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #eee;
+            background: var(--card-bg);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .mode-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="index.html" class="logo">我的博客</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="index.html">文章</a></li>
+            <li><a href="guestbook.html">留言板</a></li>
+            <li><a href="about.html">关于</a></li>
+        </ul>
+
+        <!-- 明暗模式切换按钮 -->
+        <button class="mode-toggle-btn" onclick="toggleMode()" title="切换明暗模式">🌙</button>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 页面标题 -->
+        <header class="page-header">
+            <h1>关于我</h1>
+            <p>一个正在学习编程的探索者</p>
+        </header>
+
+        <!-- 个人信息卡片 -->
+        <section class="profile-card">
+            <div class="avatar">B</div>
+            <h2>博主</h2>
+            <p class="subtitle">编程新手 / 终身学习者</p>
+            <p class="bio">
+                你好！欢迎来到我的博客。我是一个编程零基础的初学者，
+                从 2024 年开始自学前端开发。这个博客记录了我的学习历程、
+                思考感悟和技术探索。我相信，只要坚持学习，每个人都能掌握技术。
+            </p>
+        </section>
+
+        <!-- 技能标签 -->
+        <section class="info-section">
+            <h3>我的技能</h3>
+            <div class="skill-tags">
+                <span class="skill-tag learning">HTML 学习中</span>
+                <span class="skill-tag learning">CSS 学习中</span>
+                <span class="skill-tag">JavaScript 想学</span>
+                <span class="skill-tag">Python 想学</span>
+                <span class="skill-tag">写作 ✍️</span>
+                <span class="skill-tag">阅读 📚</span>
+            </div>
+        </section>
+
+        <!-- 学习时间线 -->
+        <section class="info-section">
+            <h3>学习历程</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">2024 年 1 月</div>
+                    <div class="event">开始学习编程，了解 HTML、CSS、JavaScript 基础概念</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2024 年 1 月</div>
+                    <div class="event">搭建了个人博客网站，用纯 HTML + CSS 实现了首页和文章页</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2024 年 5 月</div>
+                    <div class="event">为博客添加了主题颜色切换功能，第一次接触 JavaScript</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">未来</div>
+                    <div class="event">学习 JavaScript、尝试做交互功能、探索更多可能性...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="info-section">
+            <h3>联系我</h3>
+            <div class="contact-list">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <div class="label">邮箱</div>
+                        <div class="value">hello@myblog.com</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div>
+                        <div class="label">社交媒体</div>
+                        <div class="value">@我的博客</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <div class="label">位置</div>
+                        <div class="value">中国</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← 返回首页</a>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2024 我的博客 · 用心记录每一天的学习</p>
+    </footer>
+
+    <!-- 引入主题切换脚本 -->
+    <script src="theme.js"></script>
+</body>
+</html>

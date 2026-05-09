@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板 - 我的博客</title>
+    <style>
+        /* ========== 基础样式重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== CSS变量 ========== */
+        :root {
+            --primary-color: #2d3436;
+            --accent-color: #6c5ce7;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ========== 导航栏 ========== */
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========== 主内容区 ========== */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* ========== 页面标题 ========== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: var(--text-light);
+        }
+
+        /* ========== 留言表单 ========== */
+        .message-form {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* 表单提示文字 */
+        .form-hint {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
+
+        /* 提交按钮 */
+        .submit-btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 操作按钮行 */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-btn {
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* ========== 留言统计 ========== */
+        .message-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .message-stats h2 {
+            font-size: 22px;
+            color: var(--text-color);
+        }
+
+        .message-count {
+            font-size: 14px;
+            color: var(--text-light);
+            background: var(--bg-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+        }
+
+        /* ========== 留言列表 ========== */
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        .message-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .message-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 头像圆圈 */
+        .message-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .message-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .message-time {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .message-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-color);
+            padding-left: 54px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* 删除按钮 */
+        .message-delete {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+
+        .message-delete:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state .emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* 成功提示 */
+        .toast {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #00b894;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ========== 返回首页按钮 ========== */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        /* ========== 页脚 ========== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        /* ========== 动画 ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .message-form {
+                padding: 25px 20px;
+            }
+
+            .message-content {
+                padding-left: 0;
+                margin-top: 12px;
+            }
+
+            .message-card {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .submit-btn, .clear-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* ========== 明暗模式切换按钮 ========== */
+        .mode-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #eee;
+            background: var(--card-bg);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .mode-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="index.html" class="logo">我的博客</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="index.html">文章</a></li>
+            <li><a href="guestbook.html">留言板</a></li>
+            <li><a href="about.html">关于</a></li>
+        </ul>
+
+        <!-- 明暗模式切换按钮 -->
+        <button class="mode-toggle-btn" onclick="toggleMode()" title="切换明暗模式">🌙</button>
+    </nav>
+
+    <!-- 成功提示 -->
+    <div class="toast" id="toast">留言成功！</div>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 页面标题 -->
+        <header class="page-header">
+            <h1>留言板</h1>
+            <p>欢迎留下你的想法、建议或鼓励！</p>
+        </header>
+
+        <!-- 留言表单 -->
+        <section class="message-form">
+            <div class="form-group">
+                <label for="name-input">你的昵称</label>
+                <input type="text" id="name-input" placeholder="输入你的昵称..." maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="content-input">留言内容</label>
+                <textarea id="content-input" placeholder="写下你想说的话..." maxlength="500"></textarea>
+                <div class="form-hint">最多 500 个字</div>
+            </div>
+            <div class="form-actions">
+                <button class="clear-btn" onclick="clearForm()">清空</button>
+                <button class="submit-btn" onclick="submitMessage()">发表留言</button>
+            </div>
+        </section>
+
+        <!-- 留言统计 -->
+        <div class="message-stats">
+            <h2>所有留言</h2>
+            <span class="message-count" id="message-count">共 0 条留言</span>
+        </div>
+
+        <!-- 留言列表 -->
+        <section class="message-list" id="message-list">
+            <!-- 留言会通过 JavaScript 动态添加到这里 -->
+        </section>
+
+        <a href="index.html" class="back-link">← 返回首页</a>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2024 我的博客 · 用心记录每一天的学习</p>
+    </footer>
+
+    <!-- 引入脚本 -->
+    <script src="theme.js"></script>
+    <script src="guestbook.js"></script>
+</body>
+</html>

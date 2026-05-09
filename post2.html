@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRAE SOLO CN 桌面端保姆级教程 - 我的博客</title>
+    <style>
+        /* ========== 基础样式重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== CSS变量 ========== */
+        :root {
+            --primary-color: #2d3436;
+            --accent-color: #6c5ce7;
+            --bg-color: #fafafa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ========== 导航栏 ========== */
+        nav {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ========== 主内容区 ========== */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+
+        /* ========== 文章头部 ========== */
+        .article-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), #a29bfe);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .article-header h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+
+        /* ========== 文章内容 ========== */
+        .article-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--shadow);
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .article-content h2 {
+            font-size: 28px;
+            margin: 40px 0 20px;
+            color: var(--accent-color);
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            margin: 30px 0 15px;
+            color: var(--text-color);
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 30px 0;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        .article-content th, .article-content td {
+            border: 1px solid #e0e0e0;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .article-content th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .article-content tr:hover {
+            background: #fafafa;
+        }
+
+        /* ========== 返回按钮 ========== */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        /* ========== 页脚 ========== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .article-header h1 {
+                font-size: 26px;
+            }
+
+            .article-content {
+                padding: 30px 20px;
+                font-size: 16px;
+            }
+
+            .article-content h2 {
+                font-size: 22px;
+            }
+        }
+
+        /* ========== 明暗模式切换按钮 ========== */
+        .mode-toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #eee;
+            background: var(--card-bg);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .mode-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="index.html" class="logo">我的博客</a>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="index.html">文章</a></li>
+            <li><a href="guestbook.html">留言板</a></li>
+            <li><a href="about.html">关于</a></li>
+        </ul>
+
+        <!-- 明暗模式切换按钮 -->
+        <button class="mode-toggle-btn" onclick="toggleMode()" title="切换明暗模式">🌙</button>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 文章头部信息 -->
+        <header class="article-header">
+            <span class="article-tag">工具教程</span>
+            <h1>TRAE SOLO CN 桌面端保姆级教程</h1>
+            <div class="article-meta">2026年5月9日 · 阅读时间 15分钟</div>
+        </header>
+
+        <!-- 文章内容 -->
+        <article class="article-content">
+
+            <p><strong>TRAE SOLO CN</strong></p>
+
+            <p><strong>桌面端保姆级教程</strong></p>
+
+            <p>------ More Than Coding，AI 原生工作台全指南 ------</p>
+
+            <p>独立桌面应用·三端联动·双模式</p>
+
+            <p>适用于开发者、产品经理、运营、数据分析师等全场景</p>
+
+            <p>版本：0.1.8 | 2026 年 5 月</p>
+
+            <h2>第一章：认识 TRAE SOLO</h2>
+
+            <h3>1.1 什么是 TRAE SOLO</h3>
+
+            <p>TRAE SOLO 是字芃跳动推出的 <strong>AI 原生工作台</strong>，是一款 <strong>独立于 TRAE IDE</strong> 运行的桌面应用程序。它不仅仅是一个编程工具，更是一个覆盖从专业开发到日常办公的全场景 AI 协作平台。</p>
+
+            <p><strong>核心特点：</strong></p>
+
+            <ul>
+                <li>独立架构：不依赖 TRAE IDE 运行，专为 AI Agent 设计的独立应用</li>
+                <li>双模式：MTC（More Than Coding）模式 + Code 模式，适合不同背景用户</li>
+                <li>三端联动：网页版、桌面版、移动版共享同一套账号体系和任务数据</li>
+                <li>多元输入：支持文字、语音、附件、技能等多种输入方式</li>
+                <li>实时进度：实时展示任务当前进度并自动总结输出内容</li>
+                <li>深度优化：独立运行带来更强的性能和更丰富的交互拓展</li>
+            </ul>
+
+            <h3>1.2 三端联动：网页版、桌面版与移动版</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>端态</th>
+                        <th>特点</th>
+                        <th>适用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>网页版</td>
+                        <td>轻量便捷，无需下载安装，开箱即用</td>
+                        <td>临时需求、外出办公、快速验证</td>
+                    </tr>
+                    <tr>
+                        <td>桌面版</td>
+                        <td>独立架构，性能全面升级，支持本地+云端任务</td>
+                        <td>长期开发、复杂项目、深度工作</td>
+                    </tr>
+                    <tr>
+                        <td>移动版</td>
+                        <td>随时随地下发管理任务，支持语音输入</td>
+                        <td>碎片化场景、跨设备任务管理</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>三端联动特性：</strong></p>
+
+            <ul>
+                <li>移动版：跨设备的任务下发中心，适合在碎片化场景下快速下发和管理任务</li>
+                <li>网页版 &amp; 桌面版：负责任务执行、深度交互和产物验收</li>
+                <li>设备离线时，系统会自动切换至云端执行任务，确保任务不中断</li>
+                <li>任务状态会在三端之间无缝同步</li>
+            </ul>
+
+            <h3>1.3 双模式：MTC 模式 vs Code 模式</h3>
+
+            <p>TRAE SOLO 提供两种模式，分别面向不同背景的用户：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>模式</th>
+                        <th>面向用户</th>
+                        <th>适用场景</th>
+                        <th>典型任务</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MTC 模式</td>
+                        <td>非开发相关用户（产品经理、数据分析师、运营等）</td>
+                        <td>处理文档、数据、演示稿等</td>
+                        <td>竞品调研、数据分析报告、内容创作、文件整理</td>
+                    </tr>
+                    <tr>
+                        <td>Code 模式</td>
+                        <td>习惯于智能体主导开发的开发工程师</td>
+                        <td>编码、调试、代码库管理和 Git 工作流</td>
+                        <td>前端页面开发、输出 PRD、网页小游戏、代码重构</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p><strong>模式选择建议</strong></p>
+                <p>如果你是产品经理、运营、数据分析师等非开发岗位，推荐使用 MTC 模式；如果你是开发者，推荐使用 Code 模式。</p>
+            </blockquote>
+
+            <h3>1.4 与 TRAE IDE 的区别</h3>
+
+            <p>很多人第一次听到 TRAE，会误以为 TRAE SOLO 就是 TRAE IDE 中的 SOLO 模式。其实它们是 <strong>两个独立的产品</strong>：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th>TRAE IDE</th>
+                        <th>TRAE SOLO 桌面版</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>产品定位</td>
+                        <td>AI 原生 IDE（编程工具）</td>
+                        <td>AI 原生工作台（全场景工具）</td>
+                    </tr>
+                    <tr>
+                        <td>运行方式</td>
+                        <td>集成在 IDE 中</td>
+                        <td>独立桌面应用</td>
+                    </tr>
+                    <tr>
+                        <td>模式</td>
+                        <td>Builder/Chat/SOLO 模式</td>
+                        <td>MTC/Code 双模式</td>
+                    </tr>
+                    <tr>
+                        <td>目标用户</td>
+                        <td>以开发者为主</td>
+                        <td>开发者 + 非开发人员</td>
+                    </tr>
+                    <tr>
+                        <td>三端联动</td>
+                        <td>无</td>
+                        <td>网页版/桌面版/移动版同步</td>
+                    </tr>
+                    <tr>
+                        <td>口号</td>
+                        <td>The Real AI Engineer</td>
+                        <td>More Than Coding</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p><strong>关键区别</strong></p>
+                <p>TRAE IDE 是一个编程 IDE，而 TRAE SOLO 是一个独立的 AI 工作台。TRAE SOLO 的能力在原有 TRAE IDE SOLO 模式的基础上得到了进一步提升。</p>
+            </blockquote>
+
+            <h3>1.5 国内版 vs 国际版</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th>国内版（CN）</th>
+                        <th>国际版</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>官网</td>
+                        <td>solo.trae.cn / trae.cn</td>
+                        <td>solo.trae.ai / trae.ai</td>
+                    </tr>
+                    <tr>
+                        <td>内置模型</td>
+                        <td>豆包、DeepSeek 等国产模型</td>
+                        <td>Claude、GPT 等国际模型</td>
+                    </tr>
+                    <tr>
+                        <td>费用</td>
+                        <td>基础功能免费</td>
+                        <td>内测免费，后续可能收费</td>
+                    </tr>
+                    <tr>
+                        <td>网络</td>
+                        <td>无需科学上网</td>
+                        <td>可能需要海外网络</td>
+                    </tr>
+                    <tr>
+                        <td>登录</td>
+                        <td>手机号注册（部分需邀请码）</td>
+                        <td>邮箱/GitHub</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p><strong>推荐</strong></p>
+                <p>国内用户直接使用国内版，免费且够用。想用 GPT 系列模型的，再考虑国际版。</p>
+            </blockquote>
+
+            <h2>第二章：安装与初始化</h2>
+
+            <h3>2.1 系统要求</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>平台</th>
+                        <th>系统要求</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>macOS</td>
+                        <td>macOS 12.0+</td>
+                        <td>支持 Apple Silicon 和 Intel 芯片</td>
+                    </tr>
+                    <tr>
+                        <td>Windows</td>
+                        <td>Windows 10/11</td>
+                        <td>目前已开放下载</td>
+                    </tr>
+                    <tr>
+                        <td>Linux</td>
+                        <td>暂不支持</td>
+                        <td>---</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.2 下载地址</h3>
+
+            <p>国内版下载方式：</p>
+
+            <ol>
+                <li>访问 TRAE 中国官网：<a href="https://www.trae.com.cn/" target="_blank">https://www.trae.com.cn/</a></li>
+                <li>在首页找到"下载"或"SOLO 独立下载"区域</li>
+                <li>选择对应系统的安装包下载</li>
+            </ol>
+
+            <p><strong>或直接访问：</strong></p>
+
+            <ul>
+                <li>国内版：<a href="https://solo.trae.cn" target="_blank">https://solo.trae.cn</a></li>
+                <li>国际版：<a href="https://solo.trae.ai" target="_blank">https://solo.trae.ai</a></li>
+                <li>下载页：<a href="https://www.trae.ai/download" target="_blank">https://www.trae.ai/download</a>（找到 SOLO 下载区）</li>
+            </ul>
+
+            <h3>2.3 安装步骤</h3>
+
+            <p><strong>macOS 安装</strong></p>
+
+            <ol>
+                <li>下载 .dmg 文件（根据自己的芯片选择 Apple Silicon 或 Intel 版本）</li>
+                <li>双击打开 .dmg 文件</li>
+                <li>将 TRAE SOLO 图标拖入 Applications 文件夹</li>
+                <li>完成安装</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>首次打开</strong></p>
+                <p>如果提示安全问题，请在"系统设置 &gt; 隐私与安全性"中允许运行。</p>
+            </blockquote>
+
+            <p><strong>Windows 安装</strong></p>
+
+            <ol>
+                <li>下载 Windows 安装包</li>
+                <li>双击运行安装程序</li>
+                <li>按照提示完成安装（一键下一步即可）</li>
+            </ol>
+
+            <h3>2.4 首次启动与账号注册</h3>
+
+            <ol>
+                <li>打开 TRAE SOLO，点击"开始"</li>
+                <li>选择界面主题（深色/浅色）</li>
+                <li>选择"个人用户"</li>
+                <li>使用手机号注册登录（国内版直接发验证码）</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>邀请码</strong></p>
+                <p>目前国内版部分时期需要邀请码才能注册。每天开通 200 个 SOLO 中国版资格，可关注官方社区获取。</p>
+            </blockquote>
+
+            <h3>2.5 界面布局介绍</h3>
+
+            <p>TRAE SOLO 采用 <strong>三栏式布局</strong>：</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>区域</th>
+                        <th>位置</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>任务管理面板</td>
+                        <td>左侧</td>
+                        <td>管理和切换多个 AI 任务，支持多任务并行</td>
+                    </tr>
+                    <tr>
+                        <td>AI 对话面板</td>
+                        <td>中间</td>
+                        <td>与 AI 交流的主要区域，支持文字、语音、附件输入</td>
+                    </tr>
+                    <tr>
+                        <td>工具面板</td>
+                        <td>右侧</td>
+                        <td>包含代码编辑器、终端、浏览器预览、文档四个工具视图</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><em>这个布局与 TRAE IDE 的最大区别在于：原来你是中心，现在 AI 是中心，你在边上看它干活。</em></p>
+
+            <h2>第三章：MTC 模式详解</h2>
+
+            <h3>3.1 MTC 模式定位与适用人群</h3>
+
+            <p>MTC（More Than Coding）模式是 TRAE SOLO 的核心亮点，专为 <strong>非开发相关用户</strong> 设计，包括：</p>
+
+            <ul>
+                <li>产品经理</li>
+                <li>数据分析师</li>
+                <li>运营人员</li>
+                <li>市场运营</li>
+                <li>项目经理</li>
+                <li>任何需要处理文档、数据、演示稿的人员</li>
+            </ul>
+
+            <h3>3.2 界面布局与交互</h3>
+
+            <p>MTC 模式采用三栏式布局：</p>
+
+            <ul>
+                <li>左侧：任务管理面板，用来管理和切换多个 AI 任务</li>
+                <li>中间：AI 对话面板，你和 MTC 交流的主要区域</li>
+                <li>右侧：工具面板，包含代码编辑器、终端、浏览器预览、文档这四个工具视图</li>
+            </ul>
+
+            <h3>3.3 多元输入</h3>
+
+            <p>MTC 模式支持多种输入方式：</p>
+
+            <ul>
+                <li>文字输入：直接在对话框中输入自然语言需求</li>
+                <li>语音输入：按住说话按钮，无需打字即可下达指令</li>
+                <li>附件上传：支持上传图片、PDF、Excel、Word 等多种格式文件</li>
+                <li>技能调用：通过 / 命令调用已安装的 Skills</li>
+            </ul>
+
+            <h3>3.4 任务管理与多任务并行</h3>
+
+            <p>MTC 模式支持 <strong>多任务并行</strong>，这是 SOLO 最被低估的功能之一：</p>
+
+            <ul>
+                <li>在任务执行过程中会自动新建子任务</li>
+                <li>每个子任务都可以配一个独立的智能体</li>
+                <li>多个任务同时跑，互不干扰</li>
+                <li>你随时点左侧任务栏切换，看每个任务的进度</li>
+            </ul>
+
+            <p><strong>举例：</strong></p>
+
+            <ul>
+                <li>子任务 1：在做前端页面</li>
+                <li>子任务 2：在优化已有接口代码</li>
+                <li>子任务 3：另一个智能体在写单元测试</li>
+                <li>三件事同时推进，最后提供完整的产物汇总</li>
+            </ul>
+
+            <h3>3.5 实战场景</h3>
+
+            <p><strong>场景一：竞品调研</strong></p>
+
+            <p>痛点：手动搜索、逐一体验、信息孤岛、手动整理</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>深度分析 A 产品（Cursor）的核心功能、用户体验及商业模式，</p>
+                <p>并寻找 3-5 个市场定位相似的竞品，从以下维度进行对比分析：</p>
+                <p>- 核心功能</p>
+                <p>- 目标用户</p>
+                <p>- 盈利模式</p>
+                <p>- 近期版本迭代亮点</p>
+                <p>最终，请总结 A 产品的核心优势、潜在风险，并给出产品优化的初步建议。</p>
+            </blockquote>
+
+            <p>输出：完整的竞品分析报告（Word 文档）</p>
+
+            <p><strong>场景二：数据分析</strong></p>
+
+            <p>痛点：数据分析公式不熟悉、图表制作繁琐、口径不一致</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请帮我分析这份数据并生成分析报告。</p>
+                <p>分析需求：</p>
+                <p>1. 按照不同的反馈类型进行归类，给到数量和占比</p>
+                <p>2. 反馈数量大于等于10个的属于高频反馈，请帮我标注出来</p>
+                <p>3. 根据用户的反馈描述情绪，按照重要性程度对用户反馈排列</p>
+                <p>可视化要求：</p>
+                <p>1. 反馈类型按照柱形图、饼图展示</p>
+                <p>2. 高频提到的需求按照词云给我展示</p>
+                <p>3. 按照表格展示后续急需解决的重点需求</p>
+                <p>输出形式：请输出一份带图表的分析报告 markdown 文档。</p>
+            </blockquote>
+
+            <p>输出：带图表的数据分析报告</p>
+
+            <p><strong>场景三：文件批量处理</strong></p>
+
+            <p>痛点：效率低、准确性差、难批量化</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请整理"Downloads"下面的文件夹，并执行以下操作：</p>
+                <p>1. 创建分类文件夹：</p>
+                <p>- 文档（.pdf, .doc, .docx, .txt）</p>
+                <p>- 图片（.jpg, .png, .gif, .webp）</p>
+                <p>- 安装包（.dmg, .pkg, .zip）</p>
+                <p>- 其他</p>
+                <p>2. 将文件移动到对应分类文件夹</p>
+                <p>3. 在"文档"文件夹内，按年月创建子文件夹（基于文件修改日期）</p>
+                <p>4. 生成一个报告文件"整理记录.txt"，包含：</p>
+                <p>- 总文件数</p>
+                <p>- 每个分类的文件数量</p>
+                <p>- 最早和最新的文件日期</p>
+                <p>请先告诉我找到多少个文件，每个分类预计有多少，等我确认后再执行移动操作。</p>
+            </blockquote>
+
+            <p><strong>场景四：论文学习</strong></p>
+
+            <p>痛点：检索低效、阅读门槛高、关联梳理难</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请帮我根据这5篇文章整理论文综述，要求易懂易理解。</p>
+                <p>[PDF01][PDF02][PDF03][PDF04][PDF05]...</p>
+            </blockquote>
+
+            <p>输出：论文综述文档</p>
+
+            <p><strong>场景五：学习备考</strong></p>
+
+            <p>痛点：资料冗长、方向不清、整理耗时</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请根据以下资料帮我生成模拟题：</p>
+                <p>【输入】</p>
+                <p>根据 TRAE SOLO 的整体介绍页面 <a href="https://docs.trae.cn/solo/" target="_blank">https://docs.trae.cn/solo/</a></p>
+                <p>帮助出一些题目，用于考验我自己是否了解这款产品</p>
+                <p>【出题要求】</p>
+                <p>1. 总共 50 道题：30 道单选 + 10 道多选 + 10 道简答</p>
+                <p>2. 难度分布：简单 30% / 中等 50% / 困难 20%</p>
+                <p>3. 覆盖所有内容，出题比例均匀分配</p>
+                <p>4. 每题附详细解析和对应知识点出处</p>
+                <p>【输出】</p>
+                <p>1. 模拟试卷 markdown 文档（无答案版，可打印）</p>
+                <p>2. 答案与解析（含逐题详解）</p>
+                <p>3. 知识点覆盖统计表</p>
+            </blockquote>
+
+            <p>输出：模拟试卷、答案与解析、知识点覆盖统计表</p>
+
+            <p><strong>场景六：新媒体运营</strong></p>
+
+            <p>痛点：热点时效短、多平台适配繁琐、选题瓶颈</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请帮我完成本周的新媒体内容策划：</p>
+                <p>【账号信息】</p>
+                <p>账号定位：[官方产品宣传账号，一款面向所有人的 AI 编程产品]</p>
+                <p>目标受众：[25-35 岁互联网从业者]</p>
+                <p>运营平台：公众号、小红书、抖音、微博</p>
+                <p>【任务内容】</p>
+                <p>1. 热点调研：搜索本周与「TRAE、AI Coding、Skill、Harness」相关的热点话题 Top 5</p>
+                <p>2. 选题推荐：结合账号定位，推荐 3 个选题方向（附上你的选题理由和预期热度）</p>
+                <p>3. 对第 1 个选题，生成以下内容：</p>
+                <p>- 公众号版：标题（5 选 1） + 正文（1500-2000 字，含小标题分段）</p>
+                <p>- 小红书版：标题 + 正文（300 字以内，口语化，含 emoji 和话题标签）</p>
+                <p>- 抖音脚本版：开头 hook + 正文脚本 + 结尾引导（60 秒以内）</p>
+                <p>- 微博版：140 字以内 + 话题标签</p>
+                <p>【输出】</p>
+                <p>生成 markdown 文档，按平台分章节排列，方便逐平台复制发布。</p>
+            </blockquote>
+
+            <p>输出：多平台内容策划文档</p>
+
+            <p><strong>场景七：内容创作</strong></p>
+
+            <p>痛点：冷启动难、素材整理耗时、风格统一难</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请帮我写一篇关于「how to use TRAE SOLO」的教程文章，</p>
+                <p>要求：</p>
+                <p>1. 语言通俗易懂，适合新手阅读</p>
+                <p>2. 包含安装、基本使用、高级功能三个部分</p>
+                <p>3. 每个步骤配有截图说明（用文字描述截图位置）</p>
+                <p>4. 结尾加上 3 个实用小技巧</p>
+                <p>字数：2000-3000 字</p>
+            </blockquote>
+
+            <p><strong>场景八：运营工具搭建</strong></p>
+
+            <p>痛点：依赖开发团队、交付周期慢、自助能力缺失</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>帮我开发一个黑客松倒计时器，用 HTML、CSS、Javascript 技术栈搭建，</p>
+                <p>js 交互逻辑就是显示距离结束还有多长时间。</p>
+                <p>要求：</p>
+                <p>1. 有实时倒计时</p>
+                <p>2. 需要设置倒计时时长</p>
+                <p>3. 可以在 Web 浏览器中全屏幕显示</p>
+                <p>4. 通过一个 Button 实现（这个 Button 需要隐秘）</p>
+                <p>5. 主题色调是黑色与绿色</p>
+                <p>请帮我完成开发，并且开启内置浏览器进行预览。</p>
+            </blockquote>
+
+            <p>输出：可运行的倒计时网页应用</p>
+
+            <h2>第四章：Code 模式详解</h2>
+
+            <h3>4.1 Code 模式定位与适用人群</h3>
+
+            <p>Code 模式面向 <strong>习惯于智能体主导开发的开发工程师</strong>，聚焦于：</p>
+
+            <ul>
+                <li>编码</li>
+                <li>调试</li>
+                <li>代码库管理</li>
+                <li>Git 工作流</li>
+            </ul>
+
+            <h3>4.2 本地任务 vs 云端任务</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th>本地任务</th>
+                        <th>云端任务</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>运行环境</td>
+                        <td>本地计算机</td>
+                        <td>云端沙箱容器</td>
+                    </tr>
+                    <tr>
+                        <td>代码存储</td>
+                        <td>本地文件系统</td>
+                        <td>GitHub 仓库</td>
+                    </tr>
+                    <tr>
+                        <td>适用场景</td>
+                        <td>本地开发、调试</td>
+                        <td>无需本地环境、团队协作</td>
+                    </tr>
+                    <tr>
+                        <td>网络要求</td>
+                        <td>无特殊要求</td>
+                        <td>需要稳定网络</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.3 云端智能体（Cloud Agent）</h3>
+
+            <p>云端智能体能让你在云端环境中执行代码分析、运行和调试等任务。其特点：</p>
+
+            <ul>
+                <li>统一的运行时与依赖管理</li>
+                <li>稳定且隔离的远程环境</li>
+                <li>避免本地环境差异带来的兼容性问题</li>
+                <li>让你更专注于任务本身</li>
+            </ul>
+
+            <h3>4.4 GitHub 集成</h3>
+
+            <p>TRAE SOLO 支持与 GitHub 深度集成，可以：</p>
+
+            <ul>
+                <li>从 GitHub 拉取项目到云端运行</li>
+                <li>自动管理代码库</li>
+                <li>支持 Git 工作流</li>
+            </ul>
+
+            <h3>4.5 实战场景</h3>
+
+            <p><strong>场景一：画原型图/前端页面还原</strong></p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请帮我参考这个前端社区页面，直接帮我还原为可交互的前端代码，</p>
+                <p>支持我直接预览。</p>
+                <p>要求：</p>
+                <p>1. 左侧类别和标签都加上灰色底色，每个名称前面都加上的表情符号</p>
+                <p>2. 点击登录，支持抖音和手机号注册登录</p>
+                <p>3. 发帖参考[图片]的样式进行设计</p>
+            </blockquote>
+
+            <p>输出：可交互的前端页面，支持浏览器预览</p>
+
+            <p><strong>场景二：输出 PRD</strong></p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>请分析这个项目中的前端代码，为其中的"用户登录"和"用户名"两个流程，</p>
+                <p>按照以下格式生成 PRD 交互说明：</p>
+                <p>1. 前置条件：触发该流程需要满足的条件</p>
+                <p>2. 交互流程：以用户操作步骤的形式描述</p>
+                <p>3. 页面元素说明：表格形式，包含元素名称、类型、默认状态、交互规则</p>
+                <p>4. 异常流程：各种错误场景下的系统响应和提示文案</p>
+            </blockquote>
+
+            <p>输出：PRD 交互说明文档</p>
+
+            <p><strong>场景三：网页小游戏开发</strong></p>
+
+            <p>对于复杂任务，建议先走 <strong>Plan 模式</strong>：</p>
+
+            <p><strong>提示词模板：</strong></p>
+
+            <blockquote>
+                <p>我要做一个双人对战消消乐网页游戏。</p>
+                <p>请先出一份开发规划方案，不用写代码，</p>
+                <p>我要看清楚技术选型、页面结构、游戏核心逻辑，</p>
+                <p>确认之后再开始开发。</p>
+            </blockquote>
+
+            <p>输出：开发规划方案→ 确认后执行开发 → 可运行的游戏</p>
+
+            <h2>第五章：高级功能配置</h2>
+
+            <h3>5.1 Skills 技能系统</h3>
+
+            <p>Skills 是一份给 AI 看的"能力说明书"。你把某个工作流程、团队规范、输出要求写进一个 Skill，以后每次触发相关任务，SOLO 会自动加载这份说明书。</p>
+
+            <p><strong>Skills 的结构</strong></p>
+
+            <blockquote>
+                <p>skill-name/</p>
+                <p>├── SKILL.md  # （必须）智能体的核心指令</p>
+                <p>├── examples/  # （可选）输入/输出示例</p>
+                <p>├── templates/  # （可选）可复用的模板</p>
+                <p>└── resources/  # （可选）参考文件、运行脚本或素材</p>
+            </blockquote>
+
+            <p><strong>SKILL.md 文件格式</strong></p>
+
+            <blockquote>
+                <p>---</p>
+                <p>name: 技能名称</p>
+                <p>description: 简要描述这个技能的功能和使用场景</p>
+                <p>---</p>
+                <p># 技能名称</p>
+                <p>## 描述</p>
+                <p>描述这个技能的作用。</p>
+                <p>## 使用场景</p>
+                <p>描述触发这个技能的条件。</p>
+                <p>## 指令</p>
+                <p>清晰的分步说明，告诉智能体具体怎么做。</p>
+                <p>## 示例 (可选)</p>
+                <p>输入/输出示例，展示预期效果。</p>
+            </blockquote>
+
+            <p><strong>创建技能</strong></p>
+
+            <p><strong>方式一：用自然语言让 AI 帮你生成</strong></p>
+
+            <blockquote>
+                <p>帮我创建一个 Skill，用于生成标准化的竞品分析报告，</p>
+                <p>步骤是：第一步收集竞品基本信息，</p>
+                <p>第二步对比功能列表，</p>
+                <p>第三步分析用户口碑，</p>
+                <p>第四步给出差异化建议，</p>
+                <p>输出格式为 Markdown，每个部分要有二级标题。</p>
+            </blockquote>
+
+            <p><strong>方式二：从技能市场安装</strong></p>
+
+            <ol>
+                <li>在左侧任务栏点击"技能"</li>
+                <li>在"技能市场"页签搜索所需技能</li>
+                <li>点击技能卡片右侧的 + 按钮安装</li>
+            </ol>
+
+            <p><strong>调用技能</strong></p>
+
+            <p>手动调用：在对话框中输入 / ，然后从列表中选取所需技能</p>
+
+            <p>自动调用：AI 会根据任务内容与技能中的"使用场景"自动判断是否调用</p>
+
+            <h3>5.2 Rules 规则</h3>
+
+            <p>Rules 与 Skills 的区别：</p>
+
+            <ul>
+                <li>Rules：全量加载，一旦开启对话，所有规则都会被注入并持续占用上下文窗口</li>
+                <li>Skills：按需加载，仅在实际需要被调用时才加载到上下文中</li>
+            </ul>
+
+            <p><strong>适用场景：</strong></p>
+
+            <ul>
+                <li>使用 Rules：需要始终生效的全局规范（如"所有注释用中文"）</li>
+                <li>使用 Skills：特定场景的工作流（如"生成竞品分析报告"）</li>
+            </ul>
+
+            <h3>5.3 内置工作流：Spec &amp; Plan 模式</h3>
+
+            <p>对于复杂任务，建议先走 Plan 模式：</p>
+
+            <ol>
+                <li>在开始任务前，明确告诉 SOLO：先不要写代码，先输出方案</li>
+                <li>SOLO 会生成：需求拆解、任务顺序、技术选型、风险点</li>
+                <li>你在方案上确认、修改、拒绝某些步骤</li>
+                <li>确认后，SOLO 才开始执行</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>经验值</strong></p>
+                <p>对于超过 10 个文件改动的任务，先走 Plan 模式，最终节省的时间远超过规划本身花掉的时间。</p>
+            </blockquote>
+
+            <h3>5.4 沙箱安全机制</h3>
+
+            <p>沙箱为智能体生成的命令提供受限的执行环境，确保智能体在安全隔离的环境中运行命令。</p>
+
+            <p><strong>三种命令运行模式：</strong></p>
+
+            <ul>
+                <li>沙箱运行（默认）：命令在安全沙箱中自动运行并判定风险</li>
+                <li>手动运行：所有命令需手动确认</li>
+                <li>自动运行：所有命令自动执行</li>
+            </ul>
+
+            <blockquote>
+                <p><strong>安全提示</strong></p>
+                <p>删除文件或代码等危险操作，AI 会在执行前寻求用户批准。建议新手使用默认的沙箱运行模式。</p>
+            </blockquote>
+
+            <h3>5.5 上下文压缩</h3>
+
+            <p>用 SOLO 跑复杂任务，对话会越来越长。上下文太长，模型容易失焦。</p>
+
+            <p><strong>解决方案：</strong></p>
+
+            <ul>
+                <li>在对话面板顶部有一个上下文使用量的显示条</li>
+                <li>当上下文接近上限时，点击压缩按钮</li>
+                <li>TRAE 会自动把历史对话精炼成摘要，保留关键信息，释放上下文空间</li>
+            </ul>
+
+            <p><strong>什么时候该压缩：</strong></p>
+
+            <ul>
+                <li>跑了很长时间的任务，超过 20 轮对话</li>
+                <li>发现 SOLO 的回答开始重复或偏离方向</li>
+                <li>要开始一个新的子阶段任务前</li>
+            </ul>
+
+            <h2>第六章：实战跟练项目</h2>
+
+            <p><strong>项目一：用 MTC 模式做竞品分析报告（零基础）</strong></p>
+
+            <p><strong>难度：</strong>★☆☆☆☆ | <strong>模式：</strong>MTC</p>
+
+            <p><strong>学习目标：</strong>熟悉 MTC 模式的基本操作流程，体验 AI 自动生成文档的能力</p>
+
+            <p><strong>操作步骤</strong></p>
+
+            <ol>
+                <li>打开 TRAE SOLO，确认当前为 MTC 模式</li>
+                <li>在对话框中输入以下提示词：</li>
+            </ol>
+
+            <blockquote>
+                <p>深度分析 Cursor 的核心功能、用户体验及商业模式，</p>
+                <p>并寻找 3-5 个市场定位相似的竞品（如 Windsurf、Trae、GitHub Copilot 等），</p>
+                <p>从以下维度进行对比分析：</p>
+                <p>- 核心功能</p>
+                <p>- 目标用户</p>
+                <p>- 盈利模式</p>
+                <p>- 近期版本迭代亮点</p>
+                <p>最终输出一份完整的竞品分析报告（Word 文档）。</p>
+            </blockquote>
+
+            <ol start="3">
+                <li>观察 AI 自动执行过程</li>
+                <li>查看生成的文档，如不满意可继续对话修改</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>学习要点</strong></p>
+                <p>体会 MTC 模式如何自动搜索、整理信息并生成结构化文档。</p>
+            </blockquote>
+
+            <p><strong>项目二：用 MTC 模式整理文件并生成报告（零基础）</strong></p>
+
+            <p><strong>难度：</strong>★☆☆☆☆ | <strong>模式：</strong>MTC</p>
+
+            <p><strong>学习目标：</strong>学习如何上传附件并让 AI 处理本地文件</p>
+
+            <p><strong>操作步骤</strong></p>
+
+            <ol>
+                <li>在对话框中点击附件按钮，上传一个 Excel 文件（如用户反馈数据）</li>
+                <li>输入提示词：</li>
+            </ol>
+
+            <blockquote>
+                <p>请帮我分析这份数据并生成分析报告。</p>
+                <p>要求：</p>
+                <p>1. 按反馈类型分类，给出数量和占比</p>
+                <p>2. 生成柱状图和饼图</p>
+                <p>3. 标注高频问题（出现次数≥10）</p>
+                <p>输出形式：Markdown 文档</p>
+            </blockquote>
+
+            <ol start="3">
+                <li>查看生成的分析报告</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>学习要点</strong></p>
+                <p>体会如何上传文件并让 AI 进行数据分析。</p>
+            </blockquote>
+
+            <p><strong>项目三：用 Code 模式搭建倒计时网站（入门）</strong></p>
+
+            <p><strong>难度：</strong>★★☆☆☆ | <strong>模式：</strong>Code</p>
+
+            <p><strong>学习目标：</strong>学习 Code 模式的基本操作，体验 AI 自动生成可运行代码</p>
+
+            <p><strong>操作步骤</strong></p>
+
+            <ol>
+                <li>切换到 Code 模式</li>
+                <li>输入提示词：</li>
+            </ol>
+
+            <blockquote>
+                <p>帮我开发一个黑客松倒计时器，用 HTML+CSS+JS，</p>
+                <p>要求：</p>
+                <p>1. 实时倒计时</p>
+                <p>2. 可设置倒计时长</p>
+                <p>3. 支持全屏显示</p>
+                <p>4. 黑色背景 + 绿色数字</p>
+                <p>请开启内置浏览器预览。</p>
+            </blockquote>
+
+            <ol start="3">
+                <li>观察 AI 自动生成代码、运行并预览</li>
+                <li>在浏览器面板中查看效果</li>
+                <li>尝试修改："数字字体加大，加个启动动画"</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>学习要点</strong></p>
+                <p>体会 Code 模式如何自动生成代码、运行并在浏览器中预览。</p>
+            </blockquote>
+
+            <p><strong>项目四：用 Code 模式还原前端页面（中级）</strong></p>
+
+            <p><strong>难度：</strong>★★★☆☆ | <strong>模式：</strong>Code</p>
+
+            <p><strong>学习目标：</strong>学习如何上传图片让 AI 还原设计</p>
+
+            <p><strong>操作步骤</strong></p>
+
+            <ol>
+                <li>准备一张前端页面截图或设计稿</li>
+                <li>切换到 Code 模式</li>
+                <li>上传图片，输入提示词：</li>
+            </ol>
+
+            <blockquote>
+                <p>请参考这张图片，帮我还原成可交互的前端页面，</p>
+                <p>要求：</p>
+                <p>1. 保持原有的布局和配色</p>
+                <p>2. 按钮和链接可点击</p>
+                <p>3. 开启浏览器预览</p>
+            </blockquote>
+
+            <ol start="4">
+                <li>观察 AI 如何根据图片还原代码</li>
+                <li>在浏览器预览中验证效果</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>学习要点</strong></p>
+                <p>体会如何通过上传设计图让 AI 还原前端代码。</p>
+            </blockquote>
+
+            <p><strong>项目五：用 Skills 自定义工作流（进阶）</strong></p>
+
+            <p><strong>难度：</strong>★★★★☆ | <strong>模式：</strong>MTC/Code</p>
+
+            <p><strong>学习目标：</strong>学习如何创建和使用自定义 Skills</p>
+
+            <p><strong>操作步骤</strong></p>
+
+            <ol>
+                <li>在对话框中输入：</li>
+            </ol>
+
+            <blockquote>
+                <p>帮我创建一个 Skill，用于生成标准化的周报，</p>
+                <p>包含：</p>
+                <p>1. 本周工作概述</p>
+                <p>2. 重点项目进度</p>
+                <p>3. 下周计划</p>
+                <p>4. 存在问题</p>
+                <p>输出格式：Markdown</p>
+            </blockquote>
+
+            <ol start="2">
+                <li>确认生成的 Skill</li>
+                <li>下次需要写周报时，输入 / 调用这个 Skill</li>
+            </ol>
+
+            <blockquote>
+                <p><strong>学习要点</strong></p>
+                <p>体会如何创建可复用的 Skills，提升重复性工作的效率。</p>
+            </blockquote>
+
+            <h2>第七章：常见问题与资源</h2>
+
+            <h3>7.1 常见问题 FAQ</h3>
+
+            <p><strong>Q1：TRAE SOLO 和 TRAE IDE 有什么区别？</strong></p>
+
+            <p>TRAE SOLO 是一个独立的 AI 工作台应用，不依赖 TRAE IDE 运行。TRAE IDE 是一个编程 IDE，主要面向开发者；而 TRAE SOLO 是一个全场景的 AI 工作台，面向开发者和非开发人员。</p>
+
+            <p><strong>Q2：如何选择 MTC 模式还是 Code 模式？</strong></p>
+
+            <p>如果你是产品经理、运营、数据分析师等非开发岗位，推荐使用 MTC 模式；如果你是开发者，推荐使用 Code 模式。</p>
+
+            <p><strong>Q3：国内版需要邀请码吗？</strong></p>
+
+            <p>目前国内版部分时期需要邀请码。每天开通 200 个 SOLO 中国版资格，可关注官方社区获取。</p>
+
+            <p><strong>Q4：如何切换模式？</strong></p>
+
+            <p>点击界面左上角的模式切换按钮，在 Code 和 MTC 之间切换。</p>
+
+            <p><strong>Q5：三端数据如何同步？</strong></p>
+
+            <p>网页版、桌面版、移动版共享同一套账号体系和任务数据，任务状态会在三端之间无缝同步。</p>
+
+            <h3>7.2 官方资源链接</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>资源</th>
+                        <th>链接</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>国内版官网</td>
+                        <td><a href="https://www.trae.com.cn" target="_blank">https://www.trae.com.cn</a></td>
+                    </tr>
+                    <tr>
+                        <td>国内版 SOLO</td>
+                        <td><a href="https://solo.trae.cn" target="_blank">https://solo.trae.cn</a></td>
+                    </tr>
+                    <tr>
+                        <td>国际版官网</td>
+                        <td><a href="https://www.trae.ai" target="_blank">https://www.trae.ai</a></td>
+                    </tr>
+                    <tr>
+                        <td>国际版 SOLO</td>
+                        <td><a href="https://solo.trae.ai" target="_blank">https://solo.trae.ai</a></td>
+                    </tr>
+                    <tr>
+                        <td>官方文档</td>
+                        <td><a href="https://docs.trae.ai/solo" target="_blank">https://docs.trae.ai/solo</a></td>
+                    </tr>
+                    <tr>
+                        <td>官方中文社区</td>
+                        <td><a href="https://forum.trae.cn" target="_blank">https://forum.trae.cn</a></td>
+                    </tr>
+                    <tr>
+                        <td>下载页面</td>
+                        <td><a href="https://www.trae.ai/download" target="_blank">https://www.trae.ai/download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>感谢阅读！祝你用 TRAE SOLO 开启高效 AI 工作之旅！</strong></p>
+
+            <p>本教程基于 TRAE SOLO CN 桌面版（v0.1.8）撰写，内容截至 2026 年 5 月。</p>
+
+            <a href="index.html" class="back-link">← 返回首页</a>
+        </article>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2024 我的博客 · 用心记录每一天的学习</p>
+    </footer>
+
+    <!-- 引入主题切换脚本 -->
+    <script src="theme.js"></script>
+</body>
+</html>
