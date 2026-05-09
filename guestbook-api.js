@@ -10,7 +10,7 @@
 
 // ========== 配置 ==========
 // 后端 API 地址
-const API_URL = 'https://my-blog-server-knhag0yqn-fay020515-s-projects.vercel.app/api';
+const API_URL = 'https://my-blog-server-drtg58j60-fay020515-s-projects.vercel.app/api';
 
 // ========== 状态管理 ==========
 let currentUser = null;  // 当前登录用户
