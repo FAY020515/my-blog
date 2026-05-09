@@ -1,24 +1,24 @@
 /**
- * çè¨æ¿èæ¬ - è¿æ¥åç«¯ API çæ¬
+ * 留言板脚本 - 连接后端 API 版本
  * 
- * åè½ï¼
- * 1. ç¨æ·æ³¨ååç»å½
- * 2. ä»åç«¯è·åçè¨
- * 3. åè¡¨çè¨ï¼éç»å½ï¼
- * 4. å é¤çè¨ï¼åªè½å é¤èªå·±çï¼
+ * 功能：
+ * 1. 用户注册和登录
+ * 2. 从后端获取留言
+ * 3. 发表留言（需登录）
+ * 4. 删除留言（只能删除自己的）
  */
 
-// ========== éç½® ==========
-// åç«¯ API å°å
+// ========== 配置 ==========
+// 后端 API 地址
 const API_URL = 'https://my-blog-server-knhag0yqn-fay020515-s-projects.vercel.app/api';
 
-// ========== ç¶æç®¡ç ==========
-let currentUser = null;  // å½åç»å½ç¨æ·
-let authToken = null;    // ç»å½ä»¤ç
+// ========== 状态管理 ==========
+let currentUser = null;  // 当前登录用户
+let authToken = null;    // 登录令牌
 
-// ========== åå§å ==========
+// ========== 初始化 ==========
 function initGuestbook() {
-    // ä» localStorage æ¢å¤ç»å½ç¶æ
+    // 从 localStorage 恢复登录状态
     const savedToken = localStorage.getItem('blog-token');
     const savedUser = localStorage.getItem('blog-user');
     
@@ -28,14 +28,14 @@ function initGuestbook() {
         updateAuthUI();
     }
     
-    // å è½½çè¨
+    // 加载留言
     loadMessages();
 }
 
-// ========== ç¨æ·è®¤è¯ ==========
+// ========== 用户认证 ==========
 
 /**
- * æ¾ç¤ºç»å½/æ³¨åå¼¹çª
+ * 显示登录/注册弹窗
  */
 function showAuthModal(mode = 'login') {
     const modal = document.getElementById('auth-modal');
@@ -45,17 +45,17 @@ function showAuthModal(mode = 'login') {
     const nicknameField = document.getElementById('auth-nickname-field');
     
     if (mode === 'login') {
-        title.textContent = 'ç»å½';
-        submitBtn.textContent = 'ç»å½';
+        title.textContent = '登录';
+        submitBtn.textContent = '登录';
         submitBtn.onclick = handleLogin;
-        toggleLink.textContent = 'æ²¡æè´¦å·ï¼å»æ³¨å';
+        toggleLink.textContent = '没有账号？去注册';
         toggleLink.onclick = () => showAuthModal('register');
         nicknameField.style.display = 'none';
     } else {
-        title.textContent = 'æ³¨å';
-        submitBtn.textContent = 'æ³¨å';
+        title.textContent = '注册';
+        submitBtn.textContent = '注册';
         submitBtn.onclick = handleRegister;
-        toggleLink.textContent = 'å·²æè´¦å·ï¼å»ç»å½';
+        toggleLink.textContent = '已有账号？去登录';
         toggleLink.onclick = () => showAuthModal('login');
         nicknameField.style.display = 'block';
     }
@@ -64,7 +64,7 @@ function showAuthModal(mode = 'login') {
 }
 
 /**
- * å³é­å¼¹çª
+ * 关闭弹窗
  */
 function closeAuthModal() {
     document.getElementById('auth-modal').classList.remove('show');
@@ -74,14 +74,14 @@ function closeAuthModal() {
 }
 
 /**
- * å¤çç»å½
+ * 处理登录
  */
 async function handleLogin() {
     const username = document.getElementById('auth-username').value.trim();
     const password = document.getElementById('auth-password').value;
     
     if (!username || !password) {
-        showToast('è¯·è¾å¥ç¨æ·ååå¯ç ', 'error');
+        showToast('请输入用户名和密码', 'error');
         return;
     }
     
@@ -95,11 +95,11 @@ async function handleLogin() {
         const data = await response.json();
         
         if (!response.ok) {
-            showToast(data.error || 'ç»å½å¤±è´¥', 'error');
+            showToast(data.error || '登录失败', 'error');
             return;
         }
         
-        // ä¿å­ç»å½ç¶æ
+        // 保存登录状态
         authToken = data.token;
         currentUser = data.user;
         localStorage.setItem('blog-token', authToken);
@@ -107,16 +107,16 @@ async function handleLogin() {
         
         closeAuthModal();
         updateAuthUI();
-        showToast('ç»å½æåï¼');
+        showToast('登录成功！');
         
     } catch (error) {
-        console.error('ç»å½éè¯¯:', error);
-        showToast('ç½ç»éè¯¯ï¼è¯·ç¨åéè¯', 'error');
+        console.error('登录错误:', error);
+        showToast('网络错误，请稍后重试', 'error');
     }
 }
 
 /**
- * å¤çæ³¨å
+ * 处理注册
  */
 async function handleRegister() {
     const username = document.getElementById('auth-username').value.trim();
@@ -124,12 +124,12 @@ async function handleRegister() {
     const nickname = document.getElementById('auth-nickname').value.trim();
     
     if (!username || !password) {
-        showToast('è¯·è¾å¥ç¨æ·ååå¯ç ', 'error');
+        showToast('请输入用户名和密码', 'error');
         return;
     }
     
     if (password.length < 6) {
-        showToast('å¯ç è³å°éè¦6ä¸ªå­ç¬¦', 'error');
+        showToast('密码至少需要6个字符', 'error');
         return;
     }
     
@@ -143,11 +143,11 @@ async function handleRegister() {
         const data = await response.json();
         
         if (!response.ok) {
-            showToast(data.error || 'æ³¨åå¤±è´¥', 'error');
+            showToast(data.error || '注册失败', 'error');
             return;
         }
         
-        // ä¿å­ç»å½ç¶æ
+        // 保存登录状态
         authToken = data.token;
         currentUser = data.user;
         localStorage.setItem('blog-token', authToken);
@@ -155,16 +155,16 @@ async function handleRegister() {
         
         closeAuthModal();
         updateAuthUI();
-        showToast('æ³¨åæåï¼');
+        showToast('注册成功！');
         
     } catch (error) {
-        console.error('æ³¨åéè¯¯:', error);
-        showToast('ç½ç»éè¯¯ï¼è¯·ç¨åéè¯', 'error');
+        console.error('注册错误:', error);
+        showToast('网络错误，请稍后重试', 'error');
     }
 }
 
 /**
- * éåºç»å½
+ * 退出登录
  */
 function handleLogout() {
     authToken = null;
@@ -172,40 +172,40 @@ function handleLogout() {
     localStorage.removeItem('blog-token');
     localStorage.removeItem('blog-user');
     updateAuthUI();
-    showToast('å·²éåºç»å½');
+    showToast('已退出登录');
 }
 
 /**
- * æ´æ°ç»å½ç¶æ UI
+ * 更新登录状态 UI
  */
 function updateAuthUI() {
     const authSection = document.getElementById('auth-section');
     const messageForm = document.getElementById('message-form-section');
     
     if (currentUser) {
-        // å·²ç»å½
+        // 已登录
         authSection.innerHTML = `
             <div class="user-info">
                 <div class="user-avatar" style="background: ${currentUser.avatarColor}">${currentUser.nickname.charAt(0).toUpperCase()}</div>
                 <span class="user-name">${currentUser.nickname}</span>
-                <button class="logout-btn" onclick="handleLogout()">éåº</button>
+                <button class="logout-btn" onclick="handleLogout()">退出</button>
             </div>
         `;
         messageForm.style.display = 'block';
     } else {
-        // æªç»å½
+        // 未登录
         authSection.innerHTML = `
-            <button class="login-btn" onclick="showAuthModal('login')">ç»å½</button>
-            <button class="register-btn" onclick="showAuthModal('register')">æ³¨å</button>
+            <button class="login-btn" onclick="showAuthModal('login')">登录</button>
+            <button class="register-btn" onclick="showAuthModal('register')">注册</button>
         `;
         messageForm.style.display = 'none';
     }
 }
 
-// ========== çè¨åè½ ==========
+// ========== 留言功能 ==========
 
 /**
- * å è½½çè¨åè¡¨
+ * 加载留言列表
  */
 async function loadMessages() {
     const listEl = document.getElementById('message-list');
@@ -215,13 +215,13 @@ async function loadMessages() {
         const response = await fetch(`${API_URL}/messages`);
         const data = await response.json();
         
-        countEl.textContent = `å± ${data.messages.length} æ¡çè¨`;
+        countEl.textContent = `共 ${data.messages.length} 条留言`;
         
         if (data.messages.length === 0) {
             listEl.innerHTML = `
                 <div class="empty-state">
-                    <div class="emoji">ð¬</div>
-                    <p>è¿æ²¡æçè¨ï¼æ¥åç¬¬ä¸ä¸ªçè¨çäººå§ï¼</p>
+                    <div class="emoji">💬</div>
+                    <p>还没有留言，来做第一个留言的人吧！</p>
                 </div>
             `;
             return;
@@ -238,7 +238,7 @@ async function loadMessages() {
                         </div>
                     </div>
                     ${currentUser && currentUser.id === msg.author.id ? 
-                        `<button class="message-delete" onclick="deleteMessage(${msg.id})">å é¤</button>` : 
+                        `<button class="message-delete" onclick="deleteMessage(${msg.id})">删除</button>` : 
                         ''}
                 </div>
                 <div class="message-content">${escapeHtml(msg.content)}</div>
@@ -246,22 +246,22 @@ async function loadMessages() {
         `).join('');
         
     } catch (error) {
-        console.error('å è½½çè¨éè¯¯:', error);
+        console.error('加载留言错误:', error);
         listEl.innerHTML = `
             <div class="empty-state">
-                <div class="emoji">â ï¸</div>
-                <p>å è½½å¤±è´¥ï¼è¯·å·æ°é¡µé¢éè¯</p>
+                <div class="emoji">⚠️</div>
+                <p>加载失败，请刷新页面重试</p>
             </div>
         `;
     }
 }
 
 /**
- * åè¡¨çè¨
+ * 发表留言
  */
 async function submitMessage() {
     if (!currentUser || !authToken) {
-        showToast('è¯·åç»å½', 'error');
+        showToast('请先登录', 'error');
         showAuthModal('login');
         return;
     }
@@ -270,7 +270,7 @@ async function submitMessage() {
     const content = contentInput.value.trim();
     
     if (!content) {
-        showToast('è¯·è¾å¥çè¨åå®¹', 'error');
+        showToast('请输入留言内容', 'error');
         return;
     }
     
@@ -287,25 +287,25 @@ async function submitMessage() {
         const data = await response.json();
         
         if (!response.ok) {
-            showToast(data.error || 'åè¡¨å¤±è´¥', 'error');
+            showToast(data.error || '发表失败', 'error');
             return;
         }
         
         contentInput.value = '';
         loadMessages();
-        showToast('åè¡¨æåï¼');
+        showToast('发表成功！');
         
     } catch (error) {
-        console.error('åè¡¨çè¨éè¯¯:', error);
-        showToast('ç½ç»éè¯¯ï¼è¯·ç¨åéè¯', 'error');
+        console.error('发表留言错误:', error);
+        showToast('网络错误，请稍后重试', 'error');
     }
 }
 
 /**
- * å é¤çè¨
+ * 删除留言
  */
 async function deleteMessage(id) {
-    if (!confirm('ç¡®å®è¦å é¤è¿æ¡çè¨åï¼')) return;
+    if (!confirm('确定要删除这条留言吗？')) return;
     
     try {
         const response = await fetch(`${API_URL}/messages/${id}`, {
@@ -316,20 +316,20 @@ async function deleteMessage(id) {
         const data = await response.json();
         
         if (!response.ok) {
-            showToast(data.error || 'å é¤å¤±è´¥', 'error');
+            showToast(data.error || '删除失败', 'error');
             return;
         }
         
         loadMessages();
-        showToast('å é¤æå');
+        showToast('删除成功');
         
     } catch (error) {
-        console.error('å é¤çè¨éè¯¯:', error);
-        showToast('ç½ç»éè¯¯ï¼è¯·ç¨åéè¯', 'error');
+        console.error('删除留言错误:', error);
+        showToast('网络错误，请稍后重试', 'error');
     }
 }
 
-// ========== å·¥å·å½æ° ==========
+// ========== 工具函数 ==========
 
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -344,7 +344,7 @@ function formatTime(isoString) {
     const day = date.getDate();
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}å¹´${month}æ${day}æ¥ ${hours}:${minutes}`;
+    return `${year}年${month}月${day}日 ${hours}:${minutes}`;
 }
 
 function showToast(text, type = 'success') {
@@ -359,5 +359,5 @@ function clearForm() {
     document.getElementById('content-input').value = '';
 }
 
-// ========== é¡µé¢å è½½ ==========
+// ========== 页面加载 ==========
 document.addEventListener('DOMContentLoaded', initGuestbook);
