@@ -383,6 +383,205 @@
             }
         }
 
+        /* ========== 用户认证区域 ========== */
+        .auth-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .login-btn, .register-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .login-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+        }
+
+        .register-btn {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .login-btn:hover, .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: inherit;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        /* ========== 登录/注册弹窗 ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 35px 40px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-color);
+        }
+
+        .modal h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 18px;
+        }
+
+        .auth-form label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-color);
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text-color);
+            background: var(--bg-color);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .auth-form input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .auth-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .auth-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .auth-toggle:hover {
+            text-decoration: underline;
+        }
+
         /* ========== 响应式设计 ========== */
         @media (max-width: 600px) {
             nav {
@@ -470,6 +669,30 @@
     <!-- 成功提示 -->
     <div class="toast" id="toast">留言成功！</div>
 
+    <!-- 登录/注册弹窗 -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeAuthModal()">×</button>
+            <h3 id="auth-modal-title">登录</h3>
+            <div class="auth-form">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="auth-username" placeholder="输入用户名">
+                </div>
+                <div class="form-group" id="auth-nickname-field">
+                    <label>昵称（选填）</label>
+                    <input type="text" id="auth-nickname" placeholder="显示的昵称">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="auth-password" placeholder="输入密码">
+                </div>
+                <button class="auth-submit-btn" id="auth-submit-btn">登录</button>
+                <p class="auth-toggle" id="auth-toggle" onclick="showAuthModal('register')">没有账号？去注册</p>
+            </div>
+        </div>
+    </div>
+
     <!-- 主内容区 -->
     <main>
         <!-- 页面标题 -->
@@ -478,12 +701,14 @@
             <p>欢迎留下你的想法、建议或鼓励！</p>
         </header>
 
-        <!-- 留言表单 -->
-        <section class="message-form">
-            <div class="form-group">
-                <label for="name-input">你的昵称</label>
-                <input type="text" id="name-input" placeholder="输入你的昵称..." maxlength="20">
-            </div>
+        <!-- 用户认证区域 -->
+        <section class="auth-section" id="auth-section">
+            <button class="login-btn" onclick="showAuthModal('login')">登录</button>
+            <button class="register-btn" onclick="showAuthModal('register')">注册</button>
+        </section>
+
+        <!-- 留言表单（登录后显示） -->
+        <section class="message-form" id="message-form-section" style="display: none;">
             <div class="form-group">
                 <label for="content-input">留言内容</label>
                 <textarea id="content-input" placeholder="写下你想说的话..." maxlength="500"></textarea>
